@@ -2,9 +2,17 @@ package main
 
 import (
 	"github.com/John520/goroutine-with-recover/analyzer"
-	"golang.org/x/tools/go/analysis/singlechecker"
+	a "golang.org/x/tools/go/analysis"
 )
 
-func main() {
-	singlechecker.Main(analyzer.Analyzer)
+type analyzerPlugin struct{}
+
+// This must be implemented
+func (*analyzerPlugin) GetAnalyzers() []*a.Analyzer {
+	return []*a.Analyzer{
+		analyzer.Analyzer,
+	}
 }
+
+// This must be defined and named 'AnalyzerPlugin'
+var AnalyzerPlugin analyzerPlugin
